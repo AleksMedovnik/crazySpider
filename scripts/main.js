@@ -57,6 +57,10 @@ function onAssetsLoaded() {
         }
     });
 
+    window.onresize = () => {
+        grass.width = app.screen.width;
+        grass.height = app.screen.height;
+    }
 
     app.start();
 }
