@@ -1,9 +1,5 @@
-const container = document.getElementById('container');
-const app = new PIXI.Application({
-    width: 320,
-    height: 320,
-});
-container.appendChild(app.view);
+const app = new PIXI.Application({ resizeTo: window });
+document.body.appendChild(app.view);
 
 app.stop();
 
