@@ -23,10 +23,10 @@ function onAssetsLoaded() {
         app.loader.resources['images/grass.jpg'].texture
     );
 
-    const setSizeTexture = () => {
+    // const setSizeTexture = () => {
         grass.width = app.screen.width;
         grass.height = app.screen.height;
-    }
+    // }
 
     setSizeTexture();
 
@@ -63,7 +63,7 @@ function onAssetsLoaded() {
         }
     });
 
-    window.addEventListener('resize', setSizeTexture);
+    // window.addEventListener('resize', setSizeTexture);
 
     app.start();
 }
