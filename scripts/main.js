@@ -9,8 +9,12 @@ app.renderer.resize(window.innerWidth, window.innerHeight);
 app.stop();
 
 app.loader
-    .add(['images/grass.jpg',
-        'images/spiders/spiders.json'])
+    .add(
+        [
+            'images/grass.jpg',
+            'images/spiders/spiders.json'
+        ]
+    )
     .load(onAssetsLoaded);
 
 
@@ -23,12 +27,12 @@ function onAssetsLoaded() {
         app.loader.resources['images/grass.jpg'].texture
     );
 
-    // const setSizeTexture = () => {
+    const setSizeTexture = () => {
         grass.width = app.screen.width;
         grass.height = app.screen.height;
-    // }
+    }
 
-    // setSizeTexture();
+    setSizeTexture();
 
     app.stage.addChild(grass);
 
@@ -63,7 +67,7 @@ function onAssetsLoaded() {
         }
     });
 
-    // window.addEventListener('resize', setSizeTexture);
+    window.addEventListener('resize', setSizeTexture);
 
     app.start();
 }
