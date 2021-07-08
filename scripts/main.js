@@ -28,7 +28,7 @@ function onAssetsLoaded() {
         grass.height = app.screen.height;
     // }
 
-    setSizeTexture();
+    // setSizeTexture();
 
     app.stage.addChild(grass);
 
