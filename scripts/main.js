@@ -30,12 +30,9 @@ function onAssetsLoaded() {
     const setSizeTexture = () => {
         grass.width = app.screen.width;
         grass.height = app.screen.height;
+        spider.width = 128;
+        spider.height = 128;
     }
-
-    setSizeTexture();
-
-    app.stage.addChild(grass);
-
 
 
     for (let i = 0; i < 256; i++) {
@@ -49,12 +46,15 @@ function onAssetsLoaded() {
 
     spider.x = 50;
     spider.y = 50;
-    spider.width = 128;
-    spider.height = 128;
+    // spider.width = 128;
+    // spider.height = 128;
     spider.anchor.set(0.5);
     spider.gotoAndPlay(0);
     spider.animationSpeed = .3;
 
+    setSizeTexture();
+
+    app.stage.addChild(grass);
     app.stage.addChild(spider);
 
     app.ticker.add(() => {
