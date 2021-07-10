@@ -134,7 +134,7 @@ function update(timer, sprite1, sprite2) {
     if (hitTestRectangle(sprite1, sprite2)) {
         // 
     } else {
-        //There's no collision
+        // 
     }
 }
 
