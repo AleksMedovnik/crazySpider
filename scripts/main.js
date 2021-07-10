@@ -118,21 +118,21 @@ function onDragMove() {
 function resize(texture, sprite) {
     texture.width = app.screen.width;
     texture.height = app.screen.height;
-    sprite.x = app.screen.width - 100;
-    sprite.y = 100;
+    sprite.x = app.screen.width - 70;
+    sprite.y = 70;
 }
 
 function update(timer, sprite1, sprite2) {
     if (timer.id > 0) {
         timer.id--;
     } else {
-        sprite1.x = Math.random() * (app.screen.width - 50);
-        sprite1.y = Math.random() * (app.screen.height - 50);
+        sprite1.x = 20 + (Math.random() * (app.screen.width - 40));
+        sprite1.y = 20 + (Math.random() * (app.screen.height - 40));
         timer.id = 30;
     }
 
     if (hitTestRectangle(sprite1, sprite2)) {
-        alert(123)
+        // 
     } else {
         //There's no collision
     }
