@@ -14,6 +14,7 @@ app.loader
             'images/grass.jpg',
             'images/spiders/spiders.json',
             'images/trap.png',
+            'images/expl/explosion.json'
         ]
     )
     .load(main);
@@ -28,8 +29,10 @@ function main() {
     const spider = createSpider(50, 50, 128, 128);
     const trap = createTrap(app.screen.width - 100, 100, 100, 100);
 
-    const timer = {
-        id: 30,
+    const control = {
+        timer: 30,
+        destroy: false,
+        stop: false,
     }
 
     resize(grass, trap)
@@ -40,7 +43,7 @@ function main() {
 
 
     app.ticker.add(() => {
-        update(timer, spider, trap)
+        update(control, spider, trap)
     });
 
     window.addEventListener('resize', () => resize(grass, trap));
@@ -48,8 +51,34 @@ function main() {
 }
 
 
+// update
+function update(control, sprite1, sprite2) {
+    if (control.timer > 0) {
+        if (control.destroy) {
+            sprite1.x = 0;
+            sprite1.y = 0;
+            sprite1.width = 0;
+            sprite1.height = 0;
 
-// functions
+            sprite2.width = 0;
+            sprite2.height = 0;
+
+        }
+        control.timer--;
+    } else {
+        sprite1.x = 20 + (Math.random() * (app.screen.width - 40));
+        sprite1.y = 20 + (Math.random() * (app.screen.height - 40));
+        control.timer = 30;
+    }
+
+    if (hitTestRectangle(sprite1, sprite2)) {
+        control.destroy = true;
+        const expl = createExplosion(sprite1.x, sprite1.y, 150, 150);
+        app.stage.addChild(expl);
+    }
+}
+
+// sprite-creators
 function createTrap(x, y, w, h) {
     const trap = new PIXI.Sprite(
         app.loader.resources['images/trap.png'].texture
@@ -70,9 +99,7 @@ function createTrap(x, y, w, h) {
     trap.height = h;
 
     return trap;
-
 }
-
 function createSpider(x, y, w, h) {
 
     const spiderTextures = [];
@@ -96,17 +123,40 @@ function createSpider(x, y, w, h) {
 
     return spider;
 }
+function createExplosion(x, y, w, h) {
 
+    const explTextures = [];
+    for (let i = 0; i <= 6; i++) {
+        const texture = PIXI.Texture.from(
+            `expl_${i}.png`
+        );
+        texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+        explTextures.push(texture);
+    }
+
+    const expl = new PIXI.AnimatedSprite(explTextures);
+
+    expl.x = x;
+    expl.y = y;
+    expl.width = w;
+    expl.height = h;
+    expl.anchor.set(0.5);
+    expl.gotoAndPlay(0);
+    expl.animationSpeed = .2;
+    expl.loop = false;
+
+    return expl;
+}
+
+// handlers
 function onDragStart(event) {
     this.data = event.data;
     this.dragging = true;
 }
-
 function onDragEnd() {
     this.dragging = false;
     this.data = null;
 }
-
 function onDragMove() {
     if (this.dragging) {
         const newPosition = this.data.getLocalPosition(this.parent);
@@ -115,6 +165,7 @@ function onDragMove() {
     }
 }
 
+// resize
 function resize(texture, sprite) {
     texture.width = app.screen.width;
     texture.height = app.screen.height;
@@ -122,22 +173,7 @@ function resize(texture, sprite) {
     sprite.y = 70;
 }
 
-function update(timer, sprite1, sprite2) {
-    if (timer.id > 0) {
-        timer.id--;
-    } else {
-        sprite1.x = 20 + (Math.random() * (app.screen.width - 40));
-        sprite1.y = 20 + (Math.random() * (app.screen.height - 40));
-        timer.id = 30;
-    }
-
-    if (hitTestRectangle(sprite1, sprite2)) {
-        // 
-    } else {
-        // 
-    }
-}
-
+// collisions
 function hitTestRectangle(r1, r2) {
     let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
 
@@ -171,3 +207,4 @@ function hitTestRectangle(r1, r2) {
 
     return hit;
 };
+
